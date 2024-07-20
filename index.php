@@ -6,7 +6,7 @@ if(!isset($_SESSION['login'])){
   $_SESSION['login'] = false;
 }
 ?>
-<div class="row">
+<div class="index">
   <div class="content">
     <p>Online Store</p>
     <h1><span>Present Your</span> Products <br>To Millions</h1>

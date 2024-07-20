@@ -8,7 +8,7 @@
   src="js/passwordcheck.js">
 </script>
 
-<div class="container">Copyright @ 2024 Created by Nancy</div>
+Copyright @ 2024 Created by Nancy
 
 <script src="index.js"></script>
 </footer>
