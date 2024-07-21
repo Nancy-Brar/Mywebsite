@@ -1,21 +1,9 @@
 <?php
-// Start the session
+   $title = "Received";
+   require_once './includes/header.php';
+   require_once './db/conn.php';
+
 session_start();
-
-    $servername = "localhost";  	// Server name or IP address
-    $username = "root";     		// MySQL username
-    $password = "";     			// MySQL password
-    $dbname = "signup";	  	// Database name
-
-    // Create connection
-    $conn = mysqli_connect($servername, $username, $password, $dbname);
-
-    // Check connection
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
- 
-// Check if the login form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -27,16 +15,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (mysqli_num_rows($result) == 1) {
         // Email and password matched
         $_SESSION['email'] = $email;
-        echo "Login successful!";
+        echo "<div class='welcome'>Login successful!</div>";
         // Redirect to a protected page
-        header("Location: protected_page.php");
-        exit();
+        header("Location: index.php");
     } else {
         // Invalid credentials
-        echo "Invalid email or password.";
+        echo "<div class='welcome'>Invalid email or password.</div>";
     }
 }
 
 // Close the database connection
 mysqli_close($conn);
+?>
+<?php
+require_once './includes/footer.php';
 ?>

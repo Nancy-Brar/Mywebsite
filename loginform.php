@@ -3,7 +3,7 @@
     require_once './includes/header.php';
     require_once './db/conn.php';
 ?>
-<div class="container mt-5">
+<div class="container">
     <h2>Login</h2>
     <form action="login.php" method="POST">
         <div class="mb-3">
