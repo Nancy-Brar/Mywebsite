@@ -17,39 +17,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $province = $_POST['province'];
     $area_code = $_POST['area_code'];
 
-    // Check if passwords match
     if ($password !== $confirm_password) {
         die("Passwords do not match.");
     }
 
-    // Hash the password
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-    // Prepare and bind
-    $sql = "INSERT INTO users (first_name, last_name, username, email, password, address, city, province, area_code) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    if ($stmt === false) {
-        die("Error preparing the statement: " . $conn->error);
-    }
-    $stmt->bind_param("sssssssss", $first_name, $last_name, $username, $email, $password_hash, $address, $city, $province, $area_code);
+    $first_name = mysqli_real_escape_string($conn, $first_name);
+    $last_name = mysqli_real_escape_string($conn, $last_name);
+    $username = mysqli_real_escape_string($conn, $username);
+    $email = mysqli_real_escape_string($conn, $email);
+    $address = mysqli_real_escape_string($conn, $address);
+    $city = mysqli_real_escape_string($conn, $city);
+    $province = mysqli_real_escape_string($conn, $province);
+    $area_code = mysqli_real_escape_string($conn, $area_code);
 
-    // Execute the statement
-    if ($stmt->execute()) {
+    $query = "INSERT INTO signup_form (first_name, last_name, username, email, password, address, city, province, area_code) 
+            VALUES ('$first_name', '$last_name', '$username', '$email', '$password_hash', '$address', '$city', '$province', '$area_code')";
+
+    if (mysqli_query($conn, $query)) {
         echo "New record created successfully";
-        // Redirect to a success page or login page
         header("Location: success.php");
-        exit(); // Ensure no further code is executed after redirect
+        exit();
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Error: " . mysqli_error($conn);
     }
 
-    // Close the statement and connection
-    $stmt->close();
-    $conn->close();
+    mysqli_close($conn);
 }
 ?>
 
 <?php 
-    require_once "./includes/footer.php";
+require_once "./includes/footer.php";
 ?>
